@@ -32,9 +32,16 @@ deep statement-form imports.
 """
 
 import importlib
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from .base import IRBuilder
+
+if TYPE_CHECKING:
+    # Static aliases so IDEs/type checkers can resolve the virtual
+    # ``tvm.script.ir_builder.<dialect>`` namespace (runtime resolution goes
+    # through ``__getattr__``, which static analyzers cannot follow).
+    from tvm.tirx.script import builder as tirx
+    from tvm.relax.script import builder as relax
 
 
 def __getattr__(name: str) -> Any:

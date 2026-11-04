@@ -69,7 +69,14 @@ import importlib
 import importlib.util
 import sys
 from pathlib import Path
-from typing import Any
+from typing import Any, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    # Static aliases so IDEs/type checkers can resolve the virtual
+    # ``tvm.script.<dialect>`` namespace (runtime resolution goes through
+    # ``__getattr__``, which static analyzers cannot follow).
+    from tvm.tirx import script as tirx
+    from tvm.relax import script as relax
 
 _DIALECT_REGISTRY: dict[str, str] = {}
 

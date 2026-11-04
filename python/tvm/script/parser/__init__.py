@@ -33,11 +33,18 @@ deep statement-form imports.
 """
 
 import importlib
-from typing import Any
+from typing import Any, TYPE_CHECKING
 
 from . import _core, ir
 from ._core import parse
 from .ir import ir_module
+
+if TYPE_CHECKING:
+    # Static aliases so IDEs/type checkers can resolve the virtual
+    # ``tvm.script.parser.<dialect>`` namespace (runtime resolution goes
+    # through ``__getattr__``, which static analyzers cannot follow).
+    from tvm.tirx.script import parser as tirx
+    from tvm.relax.script import parser as relax
 
 
 def __getattr__(name: str) -> Any:
